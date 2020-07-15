@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken');
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
+        console.log(user);
         res.json(user);
     } catch(err) {
         console.log(err.message);
@@ -39,6 +40,7 @@ router.post('/',
         }
         // console.log(req.body);
         const { email, password } = req.body;
+        console.log(req.body);
 
         try {
             let user = await User.findOne({ email })
