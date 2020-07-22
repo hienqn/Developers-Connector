@@ -4,8 +4,10 @@
   "description": "A network of all Codesmithers",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "server": "nodemon server"
+    "production": "webpack",
+    "development": "set NODE_ENV=development && nodemon server",
+    "client": "webpack-dev-server --open --devtool inline-source-map --hot",
+    "dev": "concurrently \"npm run development\" \"npm run client\""
   },
   "keywords": [
     "social",
@@ -21,10 +23,31 @@
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-hook-form": "^6.0.8",
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
     "concurrently": "^5.2.0",
-    "nodemon": "^2.0.4"
+    "copy-webpack-plugin": "^6.0.3",
+    "css-loader": "^3.6.0",
+    "html-webpack-plugin": "^4.3.0",
+    "image-webpack-loader": "^6.0.0",
+    "nodemon": "^2.0.4",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "react-router-dom": "^5.2.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }

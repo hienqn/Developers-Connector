@@ -116,7 +116,6 @@ router.get('/:id', auth, async (req, res) => {
 // @route PUT api/post/like/:id
 // @desc Like a post
 // @access Private
-
 router.put('/like/:id', auth, async (req, res) => {
   const PostId = req.params.id;
   const user = req.user.id;
@@ -182,5 +181,101 @@ router.put('/unlike/:id', auth, async (req, res) => {
   }
 })
 
+router.post('/comment/:id',
+  // Sanitize data.
+  [
+      // Get user.id from auth.
+      auth,   
+      [
+        // Check if text is empty.
+        check('text', 'Text must be provided.').notEmpty(),
+      ]
+  ], 
+  async (req, res) => {
+      // Check if there is any errors in previous sanitize middleware.
+      const checkErrors = validationResult(req);
+      // Send an array of error if there is error.
+      if (!checkErrors.isEmpty()) {
+        return res.json(checkErrors.array());
+      }
 
+      try {
+        // Get user_id
+        const users = req.user.id;
+        // Get document that has user_id
+        const findUser = await User.findById(users);
+        // Get name, avatar of the user.
+        const name = findUser.name, 
+              avatar = findUser.avatar;
+        // Get text from the req.body after sanitizing. 
+        const {text} = req.body;
+        
+        // Save document after done extracting name, and avatar infos.
+        findUser.save();
+
+        // Find the post
+        const findPost = await Post.findById(req.params.id)
+        
+        // Create new comment
+        const newComment = {
+          text,
+          name,
+          avatar,
+          users
+        }
+
+        findPost.comments.unshift(newComment);
+        const post = await findPost.save();
+
+        // Finish sanitizing and creating new post. Send back this new Post. 
+        res.json(post.comments);
+      } catch(errors){
+        console.log(errors);
+        if (errors.kind === 'ObjectId'){
+          res.status(400).json('User does not exist');
+        } else {
+          res.status(500).json('Database Error');
+        }
+      }
+  }
+);
+
+// @route       Delete api/post
+// @desc        Deleting a post
+// @access      Public 
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+  //get the post id
+  const comment_id = req.params.comment_id;
+  const post_id = req.params.id;
+  // get the post document
+  try {
+    const post = await Post.findById(post_id);
+    let commentIndex;
+    const commentExist = post.comments.filter(
+      (comment, index) => {
+        if (comment.users == req.user.id && comment.id.toString() == comment_id)
+            {
+              commentIndex = index;
+              return true;
+            } else {
+              return false;
+            }
+      }
+    ).length > 0;
+
+    if (commentExist) {
+      post.comments.splice(commentIndex, 1);
+      post.save();
+      res.json(post);
+    } else {
+      res.status(404).json({msg: 'Comment not found'})
+    }
+  } catch(errors){
+    if (errors.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post is not found.' });
+    } else {
+      return res.status(500).json('Database Error');
+    }
+  }
+})
 module.exports = router;
