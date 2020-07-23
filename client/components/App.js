@@ -6,24 +6,39 @@ import style from '../style.css'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Register from './auth/Register';
 import Login from './auth/Login';
+import Dashboard from "./layout/Dashboard";
+import {Provider} from 'react-redux';
+import store from '../store';
+import Alert from '../components/layout/Alert'
+import {loadUser} from '../actions/auth'
+import PrivateRoute from '../route/PrivateRoute';
 
 class App extends Component {
+
+  componentDidMount(){
+    store.dispatch(loadUser());
+  }
+
   render() {
     return (
+      <Provider store={store}>
       <Router>
         <Fragment>
           <Navbar />
           <Switch>
             <Route exact path='/' component={Landing} />
             <section className="container">
-              <Switch>
+              <Alert />
+            
                 <Route exact path='/register/' component={Register} />
                 <Route exact path='/login/' component={Login} />
-              </Switch>
+                <PrivateRoute exact path='/dashboard/' component={Dashboard} />
+           
             </section>
-          </Switch>
+            </Switch>
         </Fragment>
       </Router>
+      </Provider>
     );
   }
 }

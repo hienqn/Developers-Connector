@@ -4,12 +4,18 @@ const CopyPlugin = require('copy-webpack-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 
 module.exports = {
-  mode: 'development',
-  entry: './client/index.js',
+  // mode: 'development',
+  entry: "./client/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+  },
+  devServer: {
+    publicPath: "/dist",
+    historyApiFallback: true,
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
   },
   module: {
     rules: [
@@ -17,9 +23,10 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/transform-runtime"],
           },
         },
       },
@@ -29,26 +36,26 @@ module.exports = {
         // For Less - /\.((c|le)ss)$/i,
         test: /\.((c|sa|sc)ss)$/i,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 1,
               modules: { auto: true },
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: { plugins: () => [postcssPresetEnv({ stage: 0 })] },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
           },
         ],
       },
       {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 8192,
         },
@@ -58,7 +65,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 8192,
             },
@@ -67,19 +74,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './client/index.html',
-      filename: './index.html',
-    }),
-    // new CopyPlugin([
-    //   { from: './client/style.css' },
-    // ]),
-  ],
-  devServer: {
-    contentBase: './dist',
-    historyApiFallback: true,
-    publicPath: '/'
-  },
-  devtool: 'eval-source-map',
+  devtool: "eval-source-map",
 };
