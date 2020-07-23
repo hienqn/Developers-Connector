@@ -18,15 +18,13 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, []);
-  
-  console.log(loading, profile);
-  
-  return (
+    
+  return ( 
     <Fragment>
       <h1 className="large text-primary"> Dashboard </h1>
       <p className="lead">
-        <h1> Welcome {user && user.name} </h1>
       </p>
+      <h1> Welcome {user && user.name} </h1>
 
       {profile != null ? (
         <Fragment>

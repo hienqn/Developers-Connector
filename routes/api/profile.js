@@ -15,8 +15,6 @@ router.get('/me', auth, async (req, res) => {
         const profile = (await Profile.findOne({user: req.user.id}).populate('user',
             ['name', 'avatar', 'email'])
         );
-        console.log('userid', req.user.id)
-        console.log(profile);
         if (!profile) {
             return res.status(400).json({msg: 'No profile for this user'});
         }
@@ -24,7 +22,7 @@ router.get('/me', auth, async (req, res) => {
         res.status(200).json(profile);
     }   
     catch(error) {
-        console.log({error: error});
+        res.status(400)({error: error});
     }
 });
 
@@ -36,9 +34,9 @@ router.post('/me',
     [   
         auth,
         [
-            body('status', 'Status is required')
+            check('status', 'Status is required')
                 .notEmpty(),
-            body('skills', 'Skills is required')
+            check('skills', 'Skills is required')
                 .notEmpty()
         ]
     ],
@@ -113,7 +111,6 @@ router.get('/', async (req, res) => {
         const profiles = await Profile.find().populate('user',['name', 'avatar']);
         res.json(profiles);
     } catch (err) {
-        console.error(err.message);
         res.status(500).send('Server Error');
     }
 })
