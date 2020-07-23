@@ -3,16 +3,17 @@ import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {logout} from '../../actions/auth'
+import { clearProfile } from "../../actions/profile";
 
 // assumming you're getting isAuthenticated 
-const Navbar = ({loading, isAuthenticated, logout}) => {
+const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
   const LoggedIn = (
     <ul>
       <li>
         <Link to="/dashboard">Dashboard</Link>
       </li>
       <li>
-        <Link onClick={logout} to="/">
+        <Link onClick={() => {logout(); clearProfile()}} to="/">
           {" "}
           Log Out{" "}
         </Link>
@@ -46,10 +47,11 @@ const Navbar = ({loading, isAuthenticated, logout}) => {
       )}
     </nav>
   );
-}
+};
 
 Navbar.propTypes = {
   logout: PropTypes.func,
+  clearProfile: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   loading: PropTypes.bool,
 };
@@ -60,4 +62,4 @@ const mapPropsToState = state => ({
 })
 
 
-export default connect(mapPropsToState, {logout})(Navbar);
+export default connect(mapPropsToState, { logout, clearProfile })(Navbar);
