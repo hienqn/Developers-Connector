@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://codesmith:Hien1995!@codesmithnetwork.nmmsz.mongodb.net/codesmith?retryWrites=true&w=majority",
+    "jwtSecret": "mysecrettoken"
+}
