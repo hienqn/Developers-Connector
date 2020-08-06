@@ -1,3 +1,4 @@
+/* Global Styles */
 :root {
   --primary-color: #17a2b8;
   --dark-color: #343a40;
@@ -33,7 +34,7 @@ img {
   width: 100%;
 }
 
-
+/* Utilities */
 .container {
   max-width: 1100px;
   margin: auto;
@@ -43,7 +44,7 @@ img {
   margin-bottom: 3rem;
 }
 
-
+/* Text Styles*/
 .x-large {
   font-size: 4rem;
   line-height: 1.2;
@@ -73,7 +74,7 @@ img {
   color: var(--dark-color);
 }
 
-
+/* Padding */
 .p {
   padding: 0.5rem;
 }
@@ -99,7 +100,7 @@ img {
   padding: 3rem 0;
 }
 
-
+/* Margin */
 .m {
   margin: 0.5rem;
 }
@@ -223,7 +224,7 @@ img {
   margin: 1.5rem 0;
 }
 
-
+/* Overlay */
 .dark-overlay {
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
@@ -233,7 +234,7 @@ img {
   height: 100%;
 }
 
-
+/* Forms */
 .form .form-group {
   margin: 1.2rem 0;
 }
@@ -297,7 +298,7 @@ button {
   background: var(--light-color);
 }
 
-
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -329,9 +330,10 @@ button {
   margin-right: 0.6rem;
 }
 
-.landing { 
+/* Landing Page */
+.landing {
   position: relative;
-  background: yellow no-repeat center center/cover;
+  background: url('./img/photo-of-people-doing-handshakes-3183197.jpg') no-repeat center center/cover;
   height: 100vh;
 }
 
@@ -347,6 +349,7 @@ button {
   text-align: center;
 }
 
+/* Profiles Page */
 .profile {
   display: grid;
   grid-template-columns: 2fr 4fr 2fr;
@@ -357,7 +360,7 @@ button {
   margin-bottom: 1rem;
 }
 
-
+/* Profile Page */
 .profile-grid {
   display: grid;
   grid-template-areas:

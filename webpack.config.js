@@ -13,6 +13,7 @@ module.exports = {
   devServer: {
     publicPath: "/dist",
     historyApiFallback: true,
+    hot: true,
     proxy: {
       "/api": "http://localhost:3000",
     },
@@ -44,13 +45,13 @@ module.exports = {
               modules: { auto: true },
             },
           },
-          {
-            loader: "postcss-loader",
-            options: { plugins: () => [postcssPresetEnv({ stage: 0 })] },
-          },
-          {
-            loader: "sass-loader",
-          },
+          // {
+          //   loader: "postcss-loader",
+          //   options: { plugins: () => [postcssPresetEnv({ stage: 0 })] },
+          // },
+          // {
+          //   loader: "sass-loader",
+          // },
         ],
       },
       {
@@ -72,7 +73,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'file-loader'
+      }
     ],
   },
-  devtool: "eval-source-map",
 };

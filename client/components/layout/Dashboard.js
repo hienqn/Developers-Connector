@@ -7,28 +7,31 @@ import { register } from "../../actions/auth";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from '../layout/Spinner';
-
+import DashboardActions from './DashboardActions';
+import DisplayCredentials from './DisplayCredentials';
 
 const Dashboard = ({
   getCurrentProfile,
   auth : {user},
   profile : {profile, loading}
 }) => {
-
   useEffect(() => {
     getCurrentProfile();
   }, []);
-    
+  
+  
   return ( 
+    !loading && profile === null ?
+    <Spinner /> :
     <Fragment>
       <h1 className="large text-primary"> Dashboard </h1>
       <p className="lead">
       </p>
       <h1> Welcome {user && user.name} </h1>
-
       {profile != null ? (
         <Fragment>
-          <p> has a profile </p>
+          <DashboardActions />
+          <DisplayCredentials experiences={profile.experience} educations={profile.education} key={profile.id}/>
         </Fragment>
       ) : (
         <Fragment>

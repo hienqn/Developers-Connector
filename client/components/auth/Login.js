@@ -3,8 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import {login} from '../../actions/auth';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
- 
-
+                                
 const Login = ({login, isAuthenticated}) => {
   const [formData, setFormData] = useState(
     {
@@ -16,12 +15,11 @@ const Login = ({login, isAuthenticated}) => {
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
-    login(email, password);
-  }
-
+    login(email, password); 
+  }  
+  
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />
+    return <Redirect to='/dashboard' />             
   }
 
   return (

@@ -10,12 +10,15 @@ const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
   const LoggedIn = (
     <ul>
       <li>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/dashboard">
+        <i className='fas fa-user' />{' '}
+          Dashboard</Link>
       </li>
       <li>
         <Link onClick={() => {logout(); clearProfile()}} to="/">
+          <i className='fas fa-sign-out-alt' /> 
           {" "}
-          Log Out{" "}
+          <span className='hide-sm'>Log Out{" "}</span>
         </Link>
       </li>
     </ul>
@@ -45,6 +48,17 @@ const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
       {!loading && (
         <Fragment> {isAuthenticated ? LoggedIn : LoggedOut} </Fragment>
       )}
+      {/* <ul>
+        <li>
+          <Link to="/profile">Developers</Link>
+        </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      </ul> */}
     </nav>
   );
 };

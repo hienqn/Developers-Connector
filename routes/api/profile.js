@@ -252,7 +252,6 @@ router.put('/education',
 router.delete('/education',
     auth,
     async (req, res) => {
-        console.log(3);
         try {
             const edu_id = req.query.edu_id;
             console.log(edu_id);

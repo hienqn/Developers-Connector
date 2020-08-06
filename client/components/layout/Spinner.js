@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import spinner from '../../img/spinner.gif';
+// import spinner from '../../img/spinner.gif';
+const spinner = 'http://static.onemansblog.com/wp-content/uploads/2016/05/Spinner-Loading.gif'
 
 export default () =>
   (

@@ -2,9 +2,9 @@ import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {submitProfile} from '../../actions/profile';
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 
-const CreateProfile = ({submitProfile, profile}) => {
+const CreateProfile = ({submitProfile, history}) => {
   const [formData, setFormData] = useState(
     {
       company: '',
@@ -42,7 +42,7 @@ const CreateProfile = ({submitProfile, profile}) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    submitProfile({...formData});
+    submitProfile(formData, history, false);
   };
 
   const onChange = (e) => {
@@ -50,10 +50,6 @@ const CreateProfile = ({submitProfile, profile}) => {
       ...formData,
       [e.target.name]: ( e.target.value)
     })
-  }
-
-  if (profile) {
-    return <Redirect to='/dashboard' />
   }
 
   return (
@@ -186,19 +182,16 @@ const CreateProfile = ({submitProfile, profile}) => {
         }
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <Link to='/dashboard'><a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        </Link>
       </form>
     </div>
   )
 }
-
-const mapStateToProps = state => ({
-  profile: state.profile.profile
-})
 
 CreateProfile.propTypes = {
   submitProfile : PropTypes.func.isRequired
 }
 
 
-export default connect(mapStateToProps, {submitProfile})(CreateProfile);
+export default connect(null, {submitProfile})(withRouter(CreateProfile));
