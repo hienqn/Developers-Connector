@@ -8,6 +8,7 @@ const DisplayCredentials = ({ experiences, educations }) => {
   const onClick = (id, type) => {
     console.log('here is my id', id, type);
     // e.preventDefault();
+    // Mistake here, delete profile by accident;
     axios.delete('/api/profile/', {params: { [type]: id}});
     window.querySelector(`#${id}`).remove();
   }
