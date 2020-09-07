@@ -8,17 +8,18 @@ import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
+import DisplayCredentials from './DisplayCredentials';
 
 const Dashboard = ({
   getCurrentProfile,
   auth : {user},
   profile : {profile, loading}
 }) => {
-
   useEffect(() => {
     getCurrentProfile();
   }, []);
-    
+  
+  
   return ( 
     loading && profile === null ?
     <Spinner /> :
@@ -30,6 +31,7 @@ const Dashboard = ({
       {profile != null ? (
         <Fragment>
           <DashboardActions />
+          <DisplayCredentials experiences={profile.experience} educations={profile.education} key={profile.id}/>
         </Fragment>
       ) : (
         <Fragment>

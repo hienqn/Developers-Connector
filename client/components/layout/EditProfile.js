@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment, useEffect, useHistory } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submitProfile, getCurrentProfile } from '../../actions/profile';
@@ -6,6 +6,12 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import profile from '../../reducers/profile';
 
 const EditProfile = ({ profile:{profile, loading}, submitProfile, history, getCurrentProfile }) => {
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    submitProfile(formData, history, true);
+    await history.push("/dashboard");
+    };
 
   const [formData, setFormData] = useState(
     {
@@ -59,10 +65,6 @@ const EditProfile = ({ profile:{profile, loading}, submitProfile, history, getCu
     });
   }, [loading]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    submitProfile(formData, history, true);
-  };
 
   const onChange = (e) => {
     setFormData({

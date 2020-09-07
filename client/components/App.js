@@ -12,7 +12,7 @@ import store from '../store';
 import Alert from '../components/layout/Alert'
 import { loadUser } from '../actions/auth'
 import PrivateRoute from '../route/PrivateRoute';
-import CreateProfile from '../components/profile-forms/createprofile';
+import CreateProfile from './profile-forms/CreateProfile';
 import EditProfile from './layout/EditProfile';
 import Experience from './layout/Experience'; 
 import Education from './layout/Education'; 
@@ -28,9 +28,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Fragment>
-
             <Navbar />
-
             <Switch>
               <Route exact path='/' component={Landing} />
               <section className="container">
@@ -44,9 +42,7 @@ class App extends Component {
                 <PrivateRoute path='/add-education/' component={Education} />
               </section>
             </Switch>
-
           </Fragment>
-
         </Router>
       </Provider>
     );

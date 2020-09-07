@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import {addExperience} from './../../actions/profile';
-import {withRouter, Link} from 'react-router-dom'
+import { addExperience } from './../../actions/profile';
+import { withRouter, Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 
-const Experience = ({addExperience, history}) => {
+const Experience = ({ addExperience, history }) => {
 
   const [formData, setFormData] = useState(
     {
@@ -14,7 +14,7 @@ const Experience = ({addExperience, history}) => {
       location: '',
       from: '',
       to: '',
-      current: '',
+      current: false,
       description: ''
     })
 
@@ -28,10 +28,10 @@ const Experience = ({addExperience, history}) => {
     description
   } = formData;
 
-  const onChange = (e) => (setFormData({ ...formData, [e.target.name]: e.target.value }));
+  const onChange = (e) => (setFormData({ ...formData, [e.target.name]: typeof e.target.value === "boolean" ? !e.target.value : e.target.value }));
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log('HERE IS FORM DATA',formData);
     addExperience(formData, history);
   }
 
@@ -91,19 +91,21 @@ const Experience = ({addExperience, history}) => {
             onChange={(e) => onChange(e)}
           ></textarea>
         </div>
-        <input type="submit" className="btn btn-primary my-1"  />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <input type="submit" className="btn btn-primary my-1" />
+        <Link to='/dashboard'>
+          <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        </Link>
       </form>
     </Fragment>
   )
 }
 
-const mapStateToProps = state => ({
+// const mapStateToProps = state => ({
 
-})
+// })
 
 Experience.propTypes = {
   addExperience: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, {addExperience})(withRouter(Experience));
+export default connect(null, { addExperience })(withRouter(Experience));

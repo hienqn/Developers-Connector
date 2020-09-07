@@ -52,7 +52,6 @@ const CreateProfile = ({submitProfile, history}) => {
     })
   }
 
-
   return (
     <div>
       <h1 className="large text-primary">
@@ -183,15 +182,12 @@ const CreateProfile = ({submitProfile, history}) => {
         }
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        <Link to='/dashboard'><a className="btn btn-light my-1" href="dashboard.html">Go Back</a>
+        </Link>
       </form>
     </div>
   )
 }
-
-const mapStateToProps = state => ({
-  
-})
 
 CreateProfile.propTypes = {
   submitProfile : PropTypes.func.isRequired

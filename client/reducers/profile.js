@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE, CREATE_PROFILE, ADD_EXPERIENCE } from "../actions/types";
+import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE, CREATE_PROFILE, ADD_EXPERIENCE, ADD_EDUCATION } from "../actions/types";
 
 const initialState = {
   profile: null,
@@ -17,6 +17,14 @@ export default function (state = initialState, action) {
         loading: false,
         profile: { ...payload, experience: [...payload.experience]}
       }
+
+    case ADD_EDUCATION:
+      return {
+        ...state,
+        loading: false,
+        profile: { ...payload, education: [...payload.education] }
+      }
+
     case GET_PROFILE:
       return {
         ...state,

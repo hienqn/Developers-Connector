@@ -5,7 +5,8 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   CREATE_PROFILE,
-  ADD_EXPERIENCE
+  ADD_EXPERIENCE,
+  ADD_EDUCATION
 } from './types';
 
 // Get current users profile
@@ -73,10 +74,12 @@ export const addExperience = (experience, history) => async dispatch => {
       'Content-Type': 'application/json'
     }
   }
+
   const body = JSON.stringify(experience);
-  console.log('bodu', body);
   try {
     const res = await axios.put("api/profile/experience", body, config);
+
+    console.log(res.data);
 
     dispatch({
       type: ADD_EXPERIENCE,
@@ -99,3 +102,37 @@ export const addExperience = (experience, history) => async dispatch => {
     });
   }
 }
+
+export const addEducation = (education, history) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  const body = JSON.stringify(education);
+  console.log("here is the body", body);
+  try {
+    const res = await axios.put("api/profile/education", body, config);
+
+    dispatch({
+      type: ADD_EDUCATION,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Education Added', 'success'));
+
+    history.push('/dashboard');
+
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+}
+

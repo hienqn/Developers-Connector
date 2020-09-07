@@ -44,11 +44,11 @@ const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
         <Link to="/">
           <i className="fas fa-code" /> Codesmith Connector
         </Link>
-      </h1>
-      {/* {!loading && (
+      </h1> 
+      {!loading && (
         <Fragment> {isAuthenticated ? LoggedIn : LoggedOut} </Fragment>
-      )} */}
-      <ul>
+      )}
+      {/* <ul>
         <li>
           <Link to="/profile">Developers</Link>
         </li>
@@ -58,7 +58,7 @@ const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
         <li>
           <Link to="/login">Login</Link>
         </li>
-      </ul>
+      </ul> */}
     </nav>
   );
 };
