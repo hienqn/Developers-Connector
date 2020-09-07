@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import {addEducation} from '../../actions/profile';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 
 const Education = ({addEducation, history}) => {
+  
   const [formData, setFormData] = useState({
     school: "",
     degree: "",
@@ -15,12 +16,12 @@ const Education = ({addEducation, history}) => {
     to: "",
     description: ""
   })  
-  const countRender = useRef(0);
 
   const { school, degree, fieldofstudy, from, current, to, description } = formData;
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: typeof e.target.value === 'boolean' ? !e.target.value : e.target.value })
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log('history in education', history);
     addEducation(formData, history);
   }
   return (
@@ -87,7 +88,7 @@ const Education = ({addEducation, history}) => {
         </div>
         <input type="submit" className="btn btn-primary my-1" />
         <Link to='/dashboard'>
-          <a className="btn btn-light my-1" href="dashboard.html">Go Back {countRender.current++}; </a>
+          <a className="btn btn-light my-1" href="dashboard.html">Go Back; </a>
         </Link>
       </form>
     </Fragment>

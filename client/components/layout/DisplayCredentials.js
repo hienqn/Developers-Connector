@@ -1,21 +1,43 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useHistory } from 'react';
+import { withRouter, Prompt } from 'react-router-dom';
+import { logout } from "../../actions/auth";
+import { connect } from 'react-redux';
+
 import axios from 'axios';
-// import { query } from 'express';
 
-const DisplayCredentials = ({ experiences, educations }) => {
+const DisplayCredentials = ({ experiences, educations, history, logout }) => {
+  const [allexperiences, setExperiences] = useState([...experiences]);
+  const [alleducations, setEducations] = useState([...educations]);
+  const [deleteuser, setdeleteuser] = useState(false);
 
+  // const history = useHistory();
 
   const onClick = (id, type) => {
-    console.log('here is my id', id, type);
-    // e.preventDefault();
-    // Mistake here, delete profile by accident;
-    axios.delete('/api/profile/', {params: { [type]: id}});
-    window.querySelector(`#${id}`).remove();
+    let deletefield = '';
+    if (type === 'exp_id') {
+      deletefield = '/experience';
+      setExperiences(allexperiences.filter(e => e._id !== id))
+    } else if (type === 'edu_id') {
+      deletefield = '/education';
+      setEducations(alleducations.filter(e => e._id !== id))
+    } 
+    axios.delete(`/api/profile${deletefield}`, {params: { [type]: id}});
   }
 
-  const experience = experiences.map(
+  const deleteProfile = async (e) => {
+    e.preventDefault();
+    setdeleteuser(true);
+    console.log('hit here')
+    console.log(deleteuser);
+    // const headers = { 'x-auth-token': localStorage.token};
+    // const params = {};
+    // await axios.delete(`/api/profile`, params, headers);
+    // await logout();
+    // await history.push('/');
+  }
+
+  const experience = allexperiences.map(
     ({ title, company, from, to, _id }) => {
-      console.log(_id);
       return (
         <tr key={_id} id={_id}>
           <td> {company} </td>
@@ -36,9 +58,8 @@ const DisplayCredentials = ({ experiences, educations }) => {
     }
   )
 
-  const education = educations.map(
+  const education = alleducations.map(
     ({ school, degree, from, to, _id }) => {
-      console.log(_id);
       return (
         <tr key={_id} id={_id}>
           <td>{school}</td>
@@ -61,6 +82,8 @@ const DisplayCredentials = ({ experiences, educations }) => {
 
   return (
     <Fragment>
+      <Prompt when={deleteuser} message={'Are you sure you want to delete your profile?'} />
+
       <h2 className="my-2">Experience Credentials</h2>
       <table className="table">
         <thead>
@@ -92,16 +115,19 @@ const DisplayCredentials = ({ experiences, educations }) => {
           {education}
         </tbody>
       </table>
-
+      
+      {/* <Link to="/">
+        <i className="fas fa-code" /> Codesmith Connector
+        </Link> */}
       <div className="my-2">
-        <button className="btn btn-danger">
+        <a className="btn btn-danger" onClick={(e) => deleteProfile(e)}>
           <i className="fas fa-user-minus"></i>
                 Delete My Account
-            </button>
+            </a>
       </div>
+      
     </Fragment>
   )
 }
 
-
-export default DisplayCredentials;
+export default connect(null, { logout })(withRouter(DisplayCredentials));

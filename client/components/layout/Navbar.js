@@ -44,7 +44,7 @@ const Navbar = ({ loading, isAuthenticated, logout, clearProfile }) => {
         <Link to="/">
           <i className="fas fa-code" /> Codesmith Connector
         </Link>
-      </h1>
+      </h1> 
       {!loading && (
         <Fragment> {isAuthenticated ? LoggedIn : LoggedOut} </Fragment>
       )}

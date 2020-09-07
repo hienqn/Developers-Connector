@@ -21,7 +21,7 @@ const Dashboard = ({
   
   
   return ( 
-    !loading && profile === null ?
+    loading && profile === null ?
     <Spinner /> :
     <Fragment>
       <h1 className="large text-primary"> Dashboard </h1>

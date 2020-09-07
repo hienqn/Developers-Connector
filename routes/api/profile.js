@@ -178,7 +178,6 @@ router.put('/experience',
                 description } = req.body;
 
         const Xexperience = {title, company, location, from, to, current, description};
-
         try {  
             const profile = await Profile.findOne({user: req.user.id});
             profile.experience.unshift(Xexperience);
@@ -194,9 +193,10 @@ router.put('/experience',
 // @desc ADD profile experience
 // @access Private
 router.delete('/experience', auth, async (req, res) => {
+    
     try {
         const exp_id = req.query.exp_id;
-        const profile = await Profile.findOne({id: req.params.exp_id});
+        const profile = await Profile.findOne({user: req.user.id});
         profile.experience.forEach(
             (e, i) => {
                 if (e.id === exp_id){

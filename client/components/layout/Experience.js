@@ -31,7 +31,7 @@ const Experience = ({ addExperience, history }) => {
   const onChange = (e) => (setFormData({ ...formData, [e.target.name]: typeof e.target.value === "boolean" ? !e.target.value : e.target.value }));
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log('HERE IS FORM DATA',formData);
     addExperience(formData, history);
   }
 
